@@ -8,7 +8,7 @@ jest.mock('../config.js', () => ({
     secret: 'test',
   },
 }));
-describe.only('Given a dbconnect function', () => {
+describe('Given a dbconnect function', () => {
   dbConnect();
 
   describe('When its called', () => {
