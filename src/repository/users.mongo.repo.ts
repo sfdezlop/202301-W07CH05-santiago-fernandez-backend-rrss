@@ -22,7 +22,7 @@ export class UsersMongoRepo implements Repo<User> {
 
   async query(): Promise<User[]> {
     debug('Instantiated at constructor at query method');
-    const data = await UserModel.find().populate('things', { owner: 0 });
+    const data = await UserModel.find().populate('relations');
     return data;
   }
 
@@ -50,7 +50,8 @@ export class UsersMongoRepo implements Repo<User> {
     const data = await UserModel.findByIdAndUpdate(info.id, info, {
       new: true,
     });
-    if (!data) throw new HTTPError(404, 'Not found', 'Id not found in update');
+    if (!data)
+      throw new HTTPError(404, 'Record not found', 'Id not found in update');
     return data;
   }
 
