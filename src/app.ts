@@ -2,9 +2,9 @@ import path from 'path';
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-// Import { usersRouter } from './routers/users.router.js';
+import { usersRouter } from './routers/users.router.js';
 import createDebug from 'debug';
-// Import { CustomError } from './errors/errors.js';
+import { CustomError } from './interfaces/error.js';
 import { __dirname } from './config.js';
 const debug = createDebug('RRSS:app');
 export const app = express();
@@ -25,16 +25,13 @@ app.use((_req, _resp, next) => {
 debug({ __dirname });
 app.use(express.static(path.resolve(__dirname, 'public')));
 
-// Modo más organizado de hacerlo
-// Ejemplo para una ruta
-
-// app.use('/users', usersRouter);
+app.use('/users', usersRouter);
 
 app.get('/', (_req, resp) => {
   resp.json({
     info: '202301-W07CH05-santiago-fernandez-backend-rrss',
     endpoints: {
-      things: '/users',
+      users: '/users',
     },
   });
 });
@@ -48,20 +45,20 @@ app.post('/', (req, resp) => {
 app.patch('/:id');
 app.delete('/:id');
 
-// App.use(
-//   (error: CustomError, _req: Request, resp: Response, _next: NextFunction) => {
-//     debug('Soy el middleware de errores');
-//     const status = error.statusCode || 500;
-//     const statusMessage = error.statusMessage || 'Internal server error';
-//     resp.status(status);
-//     resp.json({
-//       error: [
-//         {
-//           status,
-//           statusMessage,
-//         },
-//       ],
-//     });
-//     debug(status, statusMessage, error.message);
-//   }
-// );
+app.use(
+  (error: CustomError, _req: Request, resp: Response, _next: NextFunction) => {
+    debug('Soy el middleware de errores');
+    const status = error.statusCode || 500;
+    const statusMessage = error.statusMessage || 'Internal server error';
+    resp.status(status);
+    resp.json({
+      error: [
+        {
+          status,
+          statusMessage,
+        },
+      ],
+    });
+    debug(status, statusMessage, error.message);
+  }
+);

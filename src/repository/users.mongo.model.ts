@@ -25,8 +25,8 @@ const userSchema = new Schema<User>({
   },
   relations: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Relations',
+      person: Schema.Types.ObjectId,
+      type: String,
     },
   ],
 });
