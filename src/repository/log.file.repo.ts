@@ -1,12 +1,11 @@
 import fs from 'fs/promises';
-import { Repo } from './repo.interface';
 import { Log } from '../entities/log';
 import createDebug from 'debug';
 const debug = createDebug('RRSS:repo:log');
 
 const file = './data/data.json';
 
-export class LogFileRepo implements Repo<Log> {
+export class LogFileRepo {
   constructor() {
     debug('Instantiated at LogFileRepo');
   }
