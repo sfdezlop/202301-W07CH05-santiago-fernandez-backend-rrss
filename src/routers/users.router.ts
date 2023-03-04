@@ -12,10 +12,11 @@ debug('loaded');
 const repo = UsersMongoRepo.getInstance();
 const controller = new UsersController(repo);
 
-usersRouter.get('/', logged, controller.getAll.bind(controller));
+usersRouter.get('/all', logged, controller.getAll.bind(controller));
 usersRouter.post('/register', controller.register.bind(controller));
 usersRouter.post('/login', controller.login.bind(controller));
 usersRouter.patch(
-  '/change-relations/:id',
+  '/change',
+  logged,
   controller.changeRelations.bind(controller)
 );

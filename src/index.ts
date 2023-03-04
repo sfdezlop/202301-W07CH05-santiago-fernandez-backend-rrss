@@ -2,7 +2,7 @@ import http from 'http';
 import { app } from './app.js';
 import { dbConnect } from './db/db.connect.js';
 import createDebug from 'debug';
-const debug = createDebug('W6');
+const debug = createDebug('RRSS:index');
 
 const PORT = process.env.PORT || 4500;
 
